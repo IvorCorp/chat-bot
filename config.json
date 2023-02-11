@@ -1,4 +1,6 @@
 {
-    "token": "MA3MzgwMDg3OTczNzY3NTgxNw.GCG5n4.z9MgMC1yNmu4t3gch2rA9YBXWlNukBLp4TfFzE",
-    "prefix": "$"
+    "token": "Put Your Token here",
+    "prefix": "$",
+    "apikey" : "Put your api key here",
+    "command": "ask"
 }

@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const { prefix } = require('./config.json');
-const { token } = require('./config.json')
-command = prefix + "ask"
-
+const { Configuration, OpenAIApi } = require("openai");
+const { prefix, token, apikey, command } = require('./config.json');
+require('./chatgpt.js')
+botCommand = prefix + command
+console.log(apikey)
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -17,6 +18,7 @@ client.on('message', msg => {
       
   } else {
     console.log(messagevalue);
+
   }
 
   }
