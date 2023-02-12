@@ -1,24 +1,32 @@
 from typing import *
-from ext.errors.base_errors import InvalidData, HTTPException, ServerError
+from requests import request, get; from requests.exceptions import HTTPError, InvalidURL
+from errors.base_errors import InvalidData, HTTPException, ServerError
 
-def _completion_test(data: Union[str, Dict[str, Any]]) -> None:
+def _completion_test() -> None:
 
-    return
+    
 
     """
     Function that test OpenAI functionality.
 
     Attributes
     ------------
-    data: :class:`Union[str, Dict[str,Any]]`
+    > None
     """
 
-    import openai
+    for url in ['https://api.github.com/', 'https://discord.com/api']:
+        try:
+            response = get(url)
 
-    openai.api_key = "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"
+            response.raise_for_status()
+        
+        except HTTPError as h:
+            raise HTTPException(response, None) # error: ignore # type: ignore
 
-    try:
-        completion = openai.Completion.create(engine = "text-davinci-003", prompt = data, max_tokens = 2048)
+        except Exception as e:
+            raise InvalidURL("Invalid URL '{}': Did you mean 'http://{}' indeed?".format(url, url))
 
-    except:
-        raise HTTPException()
+        else:
+            print('Success!')
+
+_completion_test()

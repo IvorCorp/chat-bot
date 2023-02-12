@@ -1,2 +1,4 @@
 node_modules
 apikey.txt
+__pycache__
+ext.errors.__pycache__

@@ -95,7 +95,14 @@ class HTTPException(ChatBotException):
 
     def __init__(self, response: _ResponseType, message: Optional[Union[str, Dict[str, Any]]]):
         self.response: _ResponseType = response
-        self.status: int = response.status # type: ignore # This attribute is filled by the library even if using requests
+        if response.status_code:
+            self.status: int = response.status_code
+
+        elif response.status:
+            self.status: int = response.status
+
+        else:
+            self.status: int = 0 # type: ignore # This attribute is filled by the library even if using requests
         self.code: int
         self.text: str
 
@@ -119,7 +126,7 @@ class HTTPException(ChatBotException):
             self.text = message or ''
             self.code = 0
 
-        fmt = '{0.status} {0.reason} (error code: {1})'
+        fmt = '{0.status_code} {0.reason} (error code: {1})'
 
         if len(self.text):
             fmt += ': {2}'
@@ -157,7 +164,14 @@ class Forbidden(HTTPException):
 
     def __init__(self, response: _ResponseType, message: Optional[Union[str, Dict[str, Any]]]):
         self.response: _ResponseType = response
-        self.status: int = response.status
+        if response.status_code:
+            self.status: int = response.status_code
+
+        elif response.status:
+            self.status: int = response.status
+
+        else:
+            self.status: int = 0
         self.code: int
         self.text: str
 
@@ -200,7 +214,16 @@ class ServerError(HTTPException):
 
     def __init__(self, response: _ResponseType, message: Optional[Union[str, Dict[str, Any]]]):
         self.response: _ResponseType = response
-        self.status: int = response.status
+
+        if response.status_code:
+            self.status: int = response.status_code
+
+        elif response.status:
+            self.status: int = response.status
+
+        else:
+            self.status: int = 0
+
         self.code: int
         self.text: str
 
@@ -225,7 +248,7 @@ class ServerError(HTTPException):
             self.text = message or ''
             self.code = 0
 
-        fmt = '{0.status} {0.reason} (error code: {1})'
+        fmt = '{0.status_code} {0.reason} (error code: {1})'
 
         if len(self.text):
             fmt += ': {2}'
@@ -242,7 +265,14 @@ class InvalidData(ClientException):
 
     def __init__(self, response: _ResponseType, message: Optional[Union[str, Dict[str, Any]]]):
         self.response: _ResponseType = response
-        self.status: int = response.status
+        if response.status_code:
+            self.status: int = response.status_code
+
+        elif response.status:
+            self.status: int = response.status
+
+        else:
+            self.status: int = 0
         self.code: int
         self.text: str
 
@@ -283,7 +313,14 @@ class LoginFailure(ClientException):
 
     def __init__(self, response: _ResponseType, message: Optional[Union[str, Dict[str, Any]]]):
         self.response: _ResponseType = response
-        self.status: int = response.status
+        if response.status_code:
+            self.status: int = response.status_code
+
+        elif response.status:
+            self.status: int = response.status
+
+        else:
+            self.status: int = 0
         self.code: int
         self.text: str
 
